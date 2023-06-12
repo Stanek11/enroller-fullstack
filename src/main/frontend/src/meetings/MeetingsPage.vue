@@ -27,6 +27,8 @@ export default {
     };
   },
 
+
+
   methods: {
     addNewMeeting(meeting) {
       axios.post('/api/meetings', meeting)

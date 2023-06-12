@@ -1,7 +1,7 @@
 <template>
   <div>
     <NewMeetingForm @added="addNewMeeting($event)"></NewMeetingForm>
-    <span v-if="meetings.length == 0">Brak zaplanowanych spotkań.</span>
+    <span v-if="meetings.length === 0">Brak zaplanowanych spotkań.</span>
     <h3 v-else>Zaplanowane zajęcia ({{ meetings.length }})</h3>
     <MeetingsList :meetings="meetings"
                   :username="username"

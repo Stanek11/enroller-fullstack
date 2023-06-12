@@ -3,20 +3,23 @@
     <h1>Witaj w systemie do zapisów na zajęcia</h1>
 
     <div v-if="authenticatedUsername">
-      <UserPanel :username="authenticatedUsername" @logout="logMeOut()"></UserPanel>
-      <MeetingsPage :username="authenticatedUsername"></MeetingsPage>
-    </div>
+          <UserPanel :username="authenticatedUsername" @logout="logMeOut()"></UserPanel>
+          <MeetingsPage :username="authenticatedUsername" :meetings="meetings"></MeetingsPage>
+        </div>
 
-    <div v-else>
-      <button :class="signingUp ? 'button-outline' : '' "@click="signingUp = false"> Logowanie </button>
-      <button :class="!signingUp ? 'button-outline' : '' "@click="signingUp = true"> Rejestracja </button>
+        <div v-else>
+          <button :class="signingUp ? 'button-outline' : '' "@click="signingUp = false"> Logowanie </button>
+          <button :class="!signingUp ? 'button-outline' : '' "@click="signingUp = true"> Rejestracja </button>
 
-      <div v-if="message" class="['alert', 'alert-' + (this.isError ? 'error' : 'success')]">
+          <div v-if="message" class="['alert', 'alert-' + (this.isError ? 'error' : 'success')]">
+          </div>
+          <div :class="['alert', 'alert-' + (this.isError ? 'error' : 'success')]" v-if="message">
+            {{ message }}
+
       </div>
-      <div :class="['alert', 'alert-' + (this.isError ? 'error' : 'success')]" v-if="message">
-        {{ message }}
 
-      </div>
+      <LoginForm v-if="!signingUp" @login="(user) => logMeIn(user)"></LoginForm>
+      <LoginForm v-else @login="(user) => register(user)" button-label="Załóż konto"></LoginForm>
     </div>
   </div>
 </template>
@@ -26,17 +29,17 @@ import "milligram";
 import LoginForm from "./LoginForm";
 import UserPanel from "./UserPanel";
 import MeetingsPage from "./meetings/MeetingsPage";
-import axios from "axios";
+import axios from "axios"
 
 export default {
   components: {LoginForm, MeetingsPage, UserPanel},
   data() {
     return {
+      message: "",
+      signingUp: false,
       authenticatedUsername: '',
-      registering: false,
-      message: '',
       meetings: [],
-      isError: false,
+      isError: false
     }
   },
   methods: {

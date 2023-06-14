@@ -33,14 +33,14 @@ export default {
     addNewMeeting(meeting) {
       axios.post('/api/meetings', meeting)
                 .then(response => {
-                  this.message = ("Udało się dodać spotkanie")
+                  this.message = ("Dodano spotkanie")
                   this.meetings.push({
                     id: response.data.id,
                     ...meeting
                   })
                 })
                 .catch(response => {
-                  this.message = ("Nie udało się dodać spotkania")
+                  this.message = ("Nie dodano spotkania")
                 });
     },
     addMeetingParticipant(meeting) {
@@ -52,11 +52,11 @@ export default {
     deleteMeeting(meeting) {
       axios.delete('/api/meetings/' + meeting.id)
                 .then(response => {
-                  this.message = ("Udało się usunąć spotkanie")
+                  this.message = ("Usunięto spotkanie")
                   this.meetings.splice(this.meetings.indexOf(meeting), 1);
                 })
                 .catch(response => {
-                  this.message = ("Nie udało się dodać spotkania")
+                  this.message = ("Dodano spotkanie")
                 });
     },
   }
